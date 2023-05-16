@@ -9,6 +9,17 @@
 	select * from tbl_board where board_no >0
 	]]>
 	</select>
+	
+	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+	<![CDATA[
+	select 
+		@rownu:=@rownum+1 as rn,
+		t.board_no, t.board_title, t.board_content, t.board_writer, t.board_regdate, t.board_updatedate
+	from tbl_board t, (select @rownum:=0) rn
+	limit #{amount} offset (#{pageNum}-1) * #{amount}
+	]]>
+	
+	</select>
 
 	<select id="read" resultType="org.zerock.domain.BoardVO">
 		select * from tbl_board where
